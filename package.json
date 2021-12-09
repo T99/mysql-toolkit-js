@@ -1,0 +1,47 @@
+{
+	"name": "@t99/mysql-toolkit",
+	"version": "0.4.0",
+	"description": "My personal toolkit of functions and functionality for working with MySQL servers in TypeScript.",
+	"publishConfig": {
+		"access": "public"
+	},
+	"main": "js/main",
+	"types": ".d.ts/main",
+	"scripts": {
+		"build": "gulp rebuild",
+		"test": "gulp rebuild && jest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/T99/mysql-toolkit-js.git"
+	},
+	"keywords": [
+		"mysql",
+		"sql",
+		"database",
+		"toolkit",
+		"typescript"
+	],
+	"author": "Trevor Sears <trevor@trevorsears.com> (https://trevorsears.com/)",
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/T99/mysql-toolkit-js/issues"
+	},
+	"homepage": "https://github.com/T99/mysql-toolkit-js#readme",
+	"dependencies": {
+		"mysql": "^2.18.1"
+	},
+	"devDependencies": {
+		"@types/mysql": "^2.15.19",
+		"typescript": "latest",
+		"tslint": "latest",
+		"@types/jest": "latest",
+		"del": "latest",
+		"gulp": "latest",
+		"gulp-sourcemaps": "latest",
+		"gulp-typescript": "latest",
+		"gulp-uglify-es": "latest",
+		"jest": "latest",
+		"ts-jest": "latest"
+	}
+}
