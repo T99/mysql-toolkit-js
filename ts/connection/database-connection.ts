@@ -28,7 +28,7 @@ export type DatabaseConnectionConfig = {
 	user: string,
 	password: string,
 	database: string
-} & mysql.ConnectionConfig;
+};
 
 export class DatabaseConnection extends Queryable {
 

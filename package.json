@@ -1,6 +1,6 @@
 {
 	"name": "@t99/mysql-toolkit",
-	"version": "0.4.0",
+	"version": "0.5.0",
 	"description": "My personal toolkit of functions and functionality for working with MySQL servers in TypeScript.",
 	"publishConfig": {
 		"access": "public"
@@ -29,10 +29,10 @@
 	},
 	"homepage": "https://github.com/T99/mysql-toolkit-js#readme",
 	"dependencies": {
-		"mysql": "^2.18.1"
+		"mysql": "^2.18.1",
+		"@types/mysql": "^2.15.19"
 	},
 	"devDependencies": {
-		"@types/mysql": "^2.15.19",
 		"typescript": "latest",
 		"tslint": "latest",
 		"@types/jest": "latest",

@@ -30,7 +30,7 @@ export type DatabaseConnectionPoolConfig = {
 	password: string,
 	database: string,
 	connectionLimit: number
-} & mysql.PoolConfig;
+};
 
 export type ConnectionOptions = {
 	user?: string | undefined;
