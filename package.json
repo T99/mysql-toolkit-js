@@ -1,6 +1,6 @@
 {
 	"name": "@t99/mysql-toolkit",
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"description": "My personal toolkit of functions and functionality for working with MySQL servers in TypeScript.",
 	"publishConfig": {
 		"access": "public"
