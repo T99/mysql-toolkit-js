@@ -79,7 +79,7 @@ export abstract class Queryable implements mysql.EscapeFunctions {
 	 * @return {Promise<MySQLQueryResults>} A Promise that resolves with the results of the specified query, or rejects
 	 * with the error that occurred while attempting to complete the query.
 	 */
-	public query(options: string | mysql.QueryOptions, values?: any[]): Promise<MySQLQueryResults> {
+	public query(options: string | mysql.QueryOptions, values?: any): Promise<MySQLQueryResults> {
 		
 		return new Promise<MySQLQueryResults>((resolve: (value: MySQLQueryResults) => void,
 											   reject: (reason: mysql.MysqlError) => void): void => {
