@@ -61,7 +61,7 @@ export abstract class Queryable implements mysql.EscapeFunctions {
 		
 	}
 	
-	public format(sql: string, values: any[], stringifyObjects?: boolean, timeZone?: string): string {
+	public format(sql: string, values: any, stringifyObjects?: boolean, timeZone?: string): string {
 		
 		return this.queryableAgent.format(sql, values, stringifyObjects, timeZone);
 		
@@ -75,7 +75,7 @@ export abstract class Queryable implements mysql.EscapeFunctions {
 	 * documentation of that library/function for more details as to further available options and configuration.
 	 *
 	 * @param {string | mysql.QueryOptions} options The string SQL query or QueryOptions object to query with/on.
-	 * @param {any[]} values An optional collection of values to use inside the provided query.
+	 * @param {any} values An optional collection of values to use inside the provided query.
 	 * @return {Promise<MySQLQueryResults>} A Promise that resolves with the results of the specified query, or rejects
 	 * with the error that occurred while attempting to complete the query.
 	 */
