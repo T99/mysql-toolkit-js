@@ -106,11 +106,11 @@ export abstract class Queryable implements mysql.EscapeFunctions {
 	 * documentation of that library/function for more details as to further available options and configuration.
 	 *
 	 * @param {string | mysql.QueryOptions} options The string SQL query or QueryOptions object to query with/on.
-	 * @param {any[]} values An optional collection of values to use inside the provided query.
+	 * @param {any} values An optional collection of values to use inside the provided query.
 	 * @return {Promise<boolean>} A Promise that resolves to true if there is at least one row returned by the query,
 	 * otherwise resolving to false, or rejects with the error that occurred while attempting to complete the query.
 	 */
-	public async queryForExistence(options: string | mysql.QueryOptions, values?: any[]): Promise<boolean> {
+	public async queryForExistence(options: string | mysql.QueryOptions, values?: any): Promise<boolean> {
 		
 		return (await this.query(options, values)).results.length >= 1;
 		
@@ -124,12 +124,12 @@ export abstract class Queryable implements mysql.EscapeFunctions {
 	 * documentation of that library/function for more details as to further available options and configuration.
 	 *
 	 * @param {string | mysql.QueryOptions} options The string SQL query or QueryOptions object to query with/on.
-	 * @param {any[]} values An optional collection of values to use inside the provided query.
+	 * @param {any} values An optional collection of values to use inside the provided query.
 	 * @return {Promise<T | undefined>} A Promise that resolves to the value contained in the first column of the first
 	 * row of the result set, or undefined if no rows were returned, or rejects with the error that occurred while
 	 * attempting to complete the query.
 	 */
-	public async queryForSingleValue<T>(options: string | mysql.QueryOptions, values?: any[]): Promise<T | undefined> {
+	public async queryForSingleValue<T>(options: string | mysql.QueryOptions, values?: any): Promise<T | undefined> {
 		
 		let results: MySQLQueryResults = await this.query(options, values);
 		
@@ -150,11 +150,11 @@ export abstract class Queryable implements mysql.EscapeFunctions {
 	 * documentation of that library/function for more details as to further available options and configuration.
 	 *
 	 * @param {string | mysql.QueryOptions} options The string SQL query or QueryOptions object to query with/on.
-	 * @param {any[]} values An optional collection of values to use inside the provided query.
+	 * @param {any} values An optional collection of values to use inside the provided query.
 	 * @return {Promise<number>} A Promise that resolves to a count of the number of rows returned by the given query,
 	 * or rejects with the error that occurred while attempting to complete the query.
 	 */
-	public async queryForRowCount(options: string | mysql.QueryOptions, values?: any[]): Promise<number> {
+	public async queryForRowCount(options: string | mysql.QueryOptions, values?: any): Promise<number> {
 		
 		return (await this.query(options, values)).results.length;
 		
@@ -167,11 +167,11 @@ export abstract class Queryable implements mysql.EscapeFunctions {
 	 * documentation of that library/function for more details as to further available options and configuration.
 	 *
 	 * @param {string | mysql.QueryOptions} options The string SQL query or QueryOptions object to query with/on.
-	 * @param {any[]} values An optional collection of values to use inside the provided query.
+	 * @param {any} values An optional collection of values to use inside the provided query.
 	 * @return {Promise<T[]>} A Promise that resolves to an array of the values of the first column of the results, or
 	 * rejects with the error that occurred while attempting to complete the query.
 	 */
-	public async queryForColumnArray<T>(options: string | mysql.QueryOptions, values?: any[]): Promise<T[]> {
+	public async queryForColumnArray<T>(options: string | mysql.QueryOptions, values?: any): Promise<T[]> {
 		
 		let results: MySQLQueryResults = await this.query(options, values);
 		
