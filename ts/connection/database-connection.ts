@@ -30,10 +30,23 @@ export type DatabaseConnectionConfig = {
 	database: string
 };
 
+/**
+ * A class that represents a single, one-off connection to a database server.
+ */
 export class DatabaseConnection extends Queryable {
-
+	
+	/**
+	 * A connection to the database server.
+	 */
 	protected connection: mysql.Connection;
 	
+	/**
+	 * Constructs a new DatabaseConnection instance with the provided existing
+	 * connection instance.
+	 * 
+	 * @param {mysql.Connection} connection An existing {@link mysql.Connection}
+	 * instance with which to construct 
+	 */
 	public constructor(connection: mysql.Connection);
 	public constructor(config: string | DatabaseConnectionConfig);
 	public constructor(connectionOrConfig: mysql.Connection | string | DatabaseConnectionConfig) {
