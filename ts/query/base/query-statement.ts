@@ -7,15 +7,10 @@
 import { Queryable } from "../../connection/queryable";
 import { MySQLQueryResults } from "../../util/mysql-query-results";
 import { EscapeFunctions } from "mysql";
+import { QueryComponent } from "./query-component";
 
-export abstract class QueryStatement {
+export abstract class QueryStatement implements QueryComponent {
 	
-	/**
-	 * Builds this query into a plain string, returning the result.
-	 * 
-	 * @returns {string} A plain string representation for the query represented
-	 * by this MySQLQueryBuilder.
-	 */
 	public abstract build(escapingAgent: EscapeFunctions): string;
 	
 	/**
