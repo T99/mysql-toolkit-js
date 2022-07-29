@@ -4,11 +4,11 @@
  * Project: mysql-toolkit-js
  */
 
-import { Queryable } from "../connection/queryable";
-import { MySQLQueryResults } from "../util/mysql-query-results";
+import { Queryable } from "../../connection/queryable";
+import { MySQLQueryResults } from "../../util/mysql-query-results";
 import { EscapeFunctions } from "mysql";
 
-export abstract class MySQLQueryStatement {
+export abstract class QueryStatement {
 	
 	/**
 	 * Builds this query into a plain string, returning the result.

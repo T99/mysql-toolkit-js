@@ -4,7 +4,7 @@
  * Project: mysql-toolkit-js
  */
 
-import { MySQLQueryStatement } from "./mysql-query-statement";
+import { QueryStatement } from "./base/query-statement";
 import type { EscapeFunctions } from "mysql";
 
 export  
@@ -46,7 +46,7 @@ export type TableIdentifier = {
 	
 };
 
-export class SelectStatement extends MySQLQueryStatement {
+export class SelectStatement extends QueryStatement {
 	
 	private uniquenessModifier?: SelectUniquenessModifier;
 	
