@@ -22,7 +22,12 @@
  
 import { MySQLType } from "../../util/mysql-type";
 
-export type ColumnDescriptor = {
+export type ColumnKeyType =
+	| "Primary"
+	| "Unique"
+	| "Multiple";
+
+export type ColumnSchema = {
 	
 	type: MySQLType,
 	

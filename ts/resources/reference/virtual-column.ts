@@ -22,21 +22,21 @@
 
 import mysql from "mysql";
 import { MySQLVirtualResourceWithComment } from "./mysql-virtual-resource-with-comment";
-import { ColumnDescriptor } from "../descriptors/column-descriptor";
+import { ColumnSchema } from "../schemas/column-schema";
 import { VirtualTable, Ordinality } from "./virtual-table";
 
 export class VirtualColumn extends MySQLVirtualResourceWithComment {
 	
 	protected parent?: VirtualTable;
 
-	protected descriptor: ColumnDescriptor;
+	protected schema: ColumnSchema;
 	
-	public constructor(name: string, descriptor: ColumnDescriptor, comment?: string, parentTable?: VirtualTable) {
+	public constructor(name: string, descriptor: ColumnSchema, comment?: string, parentTable?: VirtualTable) {
 		
 		super(name, comment);
 		
 		this.parent = parentTable;
-		this.descriptor = descriptor;
+		this.schema = descriptor;
 		
 	}
 	
@@ -134,12 +134,12 @@ export class VirtualColumn extends MySQLVirtualResourceWithComment {
 	public buildDDL(escapingAgent: mysql.EscapeFunctions): string {
 		
 		let identifier: string = escapingAgent.escapeId(this.getName());
-		let type: string = this.descriptor.type.toSQLString();
-		let nullability: string = this.descriptor.isNullable ? "NULL" : "NOT NULL";
+		let type: string = this.schema.type.toSQLString();
+		let nullability: string = this.schema.isNullable ? "NULL" : "NOT NULL";
 		
 		let result: string = `${identifier} ${type} ${nullability}`;
 		
-		if (this.descriptor.extras !== undefined) result += ` ${this.descriptor.extras}`;
+		if (this.schema.extras !== undefined) result += ` ${this.schema.extras}`;
 		
 		let comment: string | undefined = this.getComment();
 		
