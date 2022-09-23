@@ -27,6 +27,15 @@ import { ConnectionOptions, DatabaseConnectionPool } from "./database-connection
 import { DatabaseConnection } from "./database-connection";
 import { MySQLQueryResults } from "../util/mysql-query-results";
 
+/**
+ * An extension/child of a normal {@link DatabaseConnectionPool} that allows the
+ * user to specify a set of configuration options that will override the
+ * configuration options of the base {@link DatabaseConnectionPool}.
+ * 
+ * @author Trevor Sears <trevor@trevorsears.com> (https://trevorsears.com/)
+ * @version v0.5.4
+ * @since v0.1.0
+ */
 export class DatabaseConnectionSubPool extends Queryable {
 	
 	protected connectionPool: DatabaseConnectionPool;
