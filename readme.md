@@ -21,7 +21,36 @@ $ npm install --save @t99/mysql-toolkit
 
 ## Basic Usage
 
-Basic usage instructions here.
+The most common usage of this library is in using connection pools. Connection
+pools are utilities for automatically distributing (and re-using) connections to
+a given database server.
+
+```typescript
+import { DatabaseConnectionPool } from "@t99/mysql-toolkit";
+
+const pool: DatabaseConnectionPool = new DatabaseConnectionPool({
+	host: "my.database.com",
+	user: "username",
+	password: "hunter1",
+	database: "plaintext_passwords",
+});
+```
+
+This is a thin wrapper over the popular NPM library [`mysql`](https://www.npmjs.com/package/mysql).
+You might even notice that the config object being passed to the constructor
+above matches that which is expected to the constructor of the `mysql` library's
+`Connection` object.
+
+Now that we have this connection established, we can use it to query the
+database that we've connected to:
+
+```typescript
+import { MySQLQueryResults } from "@t99/mysql-toolkit";
+
+const queryResult: MySQLQueryResults = await pool.query(
+	"SELECT * FROM passwords"
+);
+```
 
 ## Documentation
 
