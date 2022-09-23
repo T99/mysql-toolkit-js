@@ -3,8 +3,9 @@
  * 4:45 PM -- October 28, 2021.
  * Project: @t99/mysql-toolkit
  * 
- * @t99/mysql-toolkit - My personal toolkit of functions and functionality for working with MySQL servers in TypeScript.
- * Copyright (C) 2021 Trevor Sears
+ * @t99/mysql-toolkit - My personal toolkit of functions and functionality for
+ *     working with MySQL servers in TypeScript.
+ * Copyright (C) 2022 Trevor Sears
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

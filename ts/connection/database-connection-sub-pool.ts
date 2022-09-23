@@ -3,8 +3,9 @@
  * 9:05 AM -- December 6th, 2021
  * Project: @t99/mysql-toolkit
  * 
- * @t99/mysql-toolkit - My personal toolkit of functions and functionality for working with MySQL servers in TypeScript.
- * Copyright (C) 2021 Trevor Sears
+ * @t99/mysql-toolkit - My personal toolkit of functions and functionality for
+ *     working with MySQL servers in TypeScript.
+ * Copyright (C) 2022 Trevor Sears
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +27,15 @@ import { ConnectionOptions, DatabaseConnectionPool } from "./database-connection
 import { DatabaseConnection } from "./database-connection";
 import { MySQLQueryResults } from "../util/mysql-query-results";
 
+/**
+ * An extension/child of a normal {@link DatabaseConnectionPool} that allows the
+ * user to specify a set of configuration options that will override the
+ * configuration options of the base {@link DatabaseConnectionPool}.
+ * 
+ * @author Trevor Sears <trevor@trevorsears.com> (https://trevorsears.com/)
+ * @version v0.5.4
+ * @since v0.1.0
+ */
 export class DatabaseConnectionSubPool extends Queryable {
 	
 	protected connectionPool: DatabaseConnectionPool;
