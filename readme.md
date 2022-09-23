@@ -31,4 +31,4 @@ See the [wiki](https://github.com/T99/mysql-toolkit-js/wiki) for full documentat
 
 @t99/mysql-toolkit is made available under the GNU General Public License v3.
 
-Copyright (C) 2021 Trevor Sears
+Copyright (C) 2022 Trevor Sears
