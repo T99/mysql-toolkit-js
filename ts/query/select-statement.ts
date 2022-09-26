@@ -60,9 +60,9 @@ export class SelectStatement extends QueryStatement {
 	
 	private fromTableID?: string;
 	
-	private limitRowCount: number;
+	private limitRowCount?: number;
 	
-	private limitOffset: number;
+	private limitOffset?: number;
 	
 	public constructor(columns: ColumnIdentifier[] = [],
 						  fromTableID?: string) {
@@ -138,20 +138,29 @@ export class SelectStatement extends QueryStatement {
 		return null;
 	}
 	
-	public limit(rowCount: number): SelectStatement;
+	public limit(rowCount: number | undefined): SelectStatement;
 	public limit(offset: number, rowCount: number): SelectStatement;
-	public limit(rowCountOrOffset: number, rowCount?: number): SelectStatement {
+	public limit(offset: undefined, rowCount: undefined): SelectStatement;
+	public limit(rowCountOrOffset: number | undefined,
+				 rowCount?: number | undefined): SelectStatement {
 		
 		const result: SelectStatement = structuredClone(this);
 		
-		if (rowCount !== undefined) {
+		switch (arguments.length) {
 			
-			result.limit = rowCount;
-			result.limitOffset = rowCountOrOffset;
-			
-		} else {
-			
-			result.limit = rowCountOrOffset;
+			case 0:
+				result.limitRowCount = undefined;
+				result.limitOffset = undefined;
+				break;
+				
+			case 1:
+				result.limitRowCount = rowCountOrOffset;
+				break;
+				
+			default:
+				result.limitRowCount = rowCount;
+				result.limitOffset = rowCountOrOffset;
+				break;
 			
 		}
 		
