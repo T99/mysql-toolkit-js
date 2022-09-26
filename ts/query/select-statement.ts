@@ -191,35 +191,43 @@ export class SelectStatement extends QueryStatement {
 	
 	public build(escapingAgent: EscapeFunctions): string {
 		
-		if (this.columns.length <= 0) {
-			
-			throw new Error(
-				"Cannot build a SELECT statement that does not select at " +
-				"least one column."
-			);
-			
-		} else if (this.fromTableID === undefined) {
-			
-			throw new Error(
-				"Cannot build a SELECT statement that does not reference at " +
-				"least one source table."
-			);
-			
-		}
+		let queryComponents: string[] = ["SELECT"];
 		
 		let modifiers: string[] = [
 			this.uniquenessModifier,
 			this.highPriority ? "HIGH_PRIORITY" : undefined,
 			this.straightJoin ? "STRAIGHT_JOIN" : undefined,
-			...this.sqlModifiers
+			...this.sqlModifiers,
 		].filter((value?: string): boolean => value !== undefined) as string[];
 		
-		let selections: string[] = 
+		queryComponents.push(...modifiers);
 		
-		const query: string = [
-			"SELECT",
-			...modifiers
-		].join(" ");
+		if (this.columns.length > 0) {
+			
+			// TODO [9/26/2022 @ 4:58 PM] This is not correct...
+			queryComponents.push(...this.columns.toString())
+			
+		} else queryComponents.push("*");
+		
+		if (this.fromTableID !== undefined) {
+			
+			queryComponents.push(`FROM ${this.fromTableID}`);
+			
+		}
+		
+		if (this.limitRowCount !== undefined) {
+			
+			queryComponents.push(`LIMIT ${this.limitRowCount}`);
+			
+			if (this.limitOffset !== undefined) {
+				
+				queryComponents.push(`OFFSET ${this.limitOffset}`);
+				
+			}
+			
+		} 
+		
+		const query: string = queryComponents.join(" ");
 		
 		return `${query};`;
 		
