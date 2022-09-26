@@ -108,13 +108,13 @@ export class SelectStatement extends QueryStatement {
 		
 	}
 	
-	public FROM(tableID: string): SelectStatement {
+	public from(tableID: string): SelectStatement {
 		
-		const newStatement: SelectStatement = structuredClone(this);
+		const result: SelectStatement = structuredClone(this);
 		
-		newStatement.fromTableID = tableID;
+		result.fromTableID = tableID;
 		
-		return newStatement;
+		return result;
 		
 	}
 	
