@@ -7,8 +7,6 @@
 import { QueryStatement } from "./base/query-statement";
 import type { EscapeFunctions } from "mysql";
 
-export  
-
 export type SelectUniquenessModifier =
 	| "ALL"
 	| "DISTINCT"
