@@ -70,6 +70,13 @@ export class SelectStatement extends QueryStatement {
 		this.fromTableID = fromTableID;
 		this.columns = columns;
 		
+		this.uniquenessModifier = undefined;
+		this.highPriority = false;
+		this.straightJoin = false;
+		this.sqlModifiers = [];
+		this.limitRowCount = undefined;
+		this.limitOffset = undefined;
+		
 	}
 	
 	protected static sanitizeColumnReference(
