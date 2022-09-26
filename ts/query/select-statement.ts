@@ -60,6 +60,10 @@ export class SelectStatement extends QueryStatement {
 	
 	private fromTableID?: string;
 	
+	private limitRowCount: number;
+	
+	private limitOffset: number;
+	
 	public constructor(columns: ColumnIdentifier[] = [],
 						  fromTableID?: string) {
 		
@@ -113,6 +117,43 @@ export class SelectStatement extends QueryStatement {
 		const result: SelectStatement = structuredClone(this);
 		
 		result.fromTableID = tableID;
+		
+		return result;
+		
+	}
+	
+	public where(): SelectStatement {
+		return null;
+	}
+	
+	public groupBy(): SelectStatement {
+		return null;
+	}
+	
+	public having(): SelectStatement {
+		return null;
+	}
+	
+	public orderBy(): SelectStatement {
+		return null;
+	}
+	
+	public limit(rowCount: number): SelectStatement;
+	public limit(offset: number, rowCount: number): SelectStatement;
+	public limit(rowCountOrOffset: number, rowCount?: number): SelectStatement {
+		
+		const result: SelectStatement = structuredClone(this);
+		
+		if (rowCount !== undefined) {
+			
+			result.limit = rowCount;
+			result.limitOffset = rowCountOrOffset;
+			
+		} else {
+			
+			result.limit = rowCountOrOffset;
+			
+		}
 		
 		return result;
 		
