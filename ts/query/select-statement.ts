@@ -127,21 +127,21 @@ export class SelectStatement extends QueryStatement {
 		
 	}
 	
-	public where(): SelectStatement {
-		return null;
-	}
-	
-	public groupBy(): SelectStatement {
-		return null;
-	}
-	
-	public having(): SelectStatement {
-		return null;
-	}
-	
-	public orderBy(): SelectStatement {
-		return null;
-	}
+	// public where(): SelectStatement {
+	// 	return null;
+	// }
+	//
+	// public groupBy(): SelectStatement {
+	// 	return null;
+	// }
+	//
+	// public having(): SelectStatement {
+	// 	return null;
+	// }
+	//
+	// public orderBy(): SelectStatement {
+	// 	return null;
+	// }
 	
 	public limit(rowCount: number | undefined): SelectStatement;
 	public limit(offset: number, rowCount: number): SelectStatement;
