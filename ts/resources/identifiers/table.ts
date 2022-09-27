@@ -1,51 +1,52 @@
 /*
  * Created by Trevor Sears <trevor@trevorsears.com> (https://trevorsears.com/).
- * 4:04 PM -- July 29th, 2022
+ * 6:13 PM -- September 26th, 2022
  * Project: mysql-toolkit-js
  */
 
-export type TableDescriptor =
+export type TableReference =
 	| string
 	| [string]
 	| [string, string]
 	| TableIdentifier;
 
 export type TableIdentifier = {
-	
-	databaseName?: string,
-	
-	tableName?: string,
-	
+	table?: string,
+	database?: string,
 };
 
-export function standardizeTableDescriptor(tableName: string): TableIdentifier;
-
-export function standardizeTableDescriptor(databaseName: string,
-	tableName: string): TableIdentifier;
-
-export function standardizeTableDescriptor(
-	descriptor: TableDescriptor): TableIdentifier;
-
-export function standardizeTableDescriptor(arg1: string | TableDescriptor,
-	arg2?: string): TableIdentifier {
+/**
+ * Sanitizes the input value to a TableIdentifier object and returns the result.
+ * @param {TableReference} tableReference The original TableReference value,
+ * which could be in a number of different formats.
+ * @returns {TableIdentifier} The sanitized TableIdentifier object.
+ */
+export function sanitizeTableReference(
+	tableReference: TableReference): TableIdentifier {
 	
-	if (arg2 !== undefined) {
+	if (typeof tableReference === "string") {
 		
 		return {
-			databaseName: arg1 as string,
-			tableName: arg2,
+			table: tableReference,
 		};
 		
-	} else if (typeof arg1 === "string") return { tableName: arg1 as string };
-	else if (Array.isArray(arg1)) {
+	} else if (Array.isArray(tableReference)) {
 		
-		const paddedDescriptor = arg1.slice(0, 2).reverse();
+		if (tableReference.length === 1) {
+			
+			return {
+				table: tableReference[0],
+			};
+			
+		} else {
+			
+			return {
+				database: tableReference[0],
+				table: tableReference[1],
+			};
+			
+		}
 		
-		return {
-			tableName: paddedDescriptor[0],
-			databaseName: paddedDescriptor[1],
-		};
-		
-	} else return arg1 as TableIdentifier;
+	} else return tableReference;
 	
 }

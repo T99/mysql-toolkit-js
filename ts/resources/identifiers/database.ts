@@ -4,28 +4,37 @@
  * Project: mysql-toolkit-js
  */
 
-export type DatabaseDescriptor =
+export type DatabaseReference =
 	| string
 	| [string]
 	| DatabaseIdentifier;
 
 export type DatabaseIdentifier = {
-	
-	databaseName?: string,
-	
+	database: string,
 };
 
-export function standardizeDatabaseDescriptor(
-	databaseName: string): DatabaseIdentifier;
-
-export function standardizeDatabaseDescriptor(
-	descriptor: DatabaseDescriptor): DatabaseIdentifier;
-
-export function standardizeDatabaseDescriptor(
-	arg1: string | DatabaseDescriptor): DatabaseIdentifier {
+/**
+ * Sanitizes the input value to a DatabaseIdentifier object and returns the
+ * result.
+ * @param {DatabaseReference} databaseReference The original DatabaseReference
+ * value, which could be in a number of different formats.
+ * @returns {DatabaseIdentifier} The sanitized DatabaseIdentifier object.
+ */
+export function sanitizeDatabaseReference(
+	databaseReference: DatabaseReference): DatabaseIdentifier {
 	
-	if (typeof arg1 === "string") return { databaseName: arg1 as string };
-	else if (Array.isArray(arg1)) return { databaseName: arg1[0] };
-	else return arg1 as DatabaseIdentifier;
+	if (typeof databaseReference === "string") {
+		
+		return {
+			database: databaseReference,
+		};
+		
+	} else if (Array.isArray(databaseReference)) {
+		
+		return {
+			database: databaseReference[0],
+		};
+		
+	} else return databaseReference;
 	
 }

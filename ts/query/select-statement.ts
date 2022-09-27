@@ -6,6 +6,16 @@
 
 import { QueryStatement } from "./base/query-statement";
 import type { EscapeFunctions } from "mysql";
+import {
+	ColumnIdentifier,
+	ColumnReference,
+	sanitizeColumnReference
+} from "../resources/identifiers/column";
+import {
+	TableIdentifier,
+	TableReference,
+	sanitizeTableReference
+} from "../resources/identifiers/table";
 
 export type SelectUniquenessModifier =
 	| "ALL"
@@ -19,31 +29,6 @@ export type SelectSQLModifiers =
 	| "SQL_NO_CACHE"
 	| "SQL_CALC_FOUND_ROWS";
 
-export type ColumnReference =
-	| string
-	| [string]
-	| [string, string]
-	| [string, string, string]
-	| ColumnIdentifier;
-
-export type ColumnIdentifier = {
-	
-	column: string,
-	
-	table?: string,
-	
-	database?: string,
-	
-};
-
-export type TableIdentifier = {
-	
-	table: string,
-	
-	database?: string,
-	
-};
-
 export class SelectStatement extends QueryStatement {
 	
 	private uniquenessModifier?: SelectUniquenessModifier;
@@ -56,19 +41,24 @@ export class SelectStatement extends QueryStatement {
 	
 	private columns: ColumnIdentifier[];
 	
-	private fromTableID?: string;
+	private fromTable?: TableIdentifier;
 	
 	private limitRowCount?: number;
 	
 	private limitOffset?: number;
 	
-	public constructor(columns: ColumnIdentifier[] = [],
-						  fromTableID?: string) {
+	public constructor(columns: ColumnReference[] = [],
+					   table?: TableReference) {
 		
 		super();
 		
-		this.fromTableID = fromTableID;
-		this.columns = columns;
+		if (table !== undefined) {
+			
+			this.fromTable = sanitizeTableReference(table);
+			
+		}
+		
+		this.columns = columns.map(sanitizeColumnReference);
 		
 		this.uniquenessModifier = undefined;
 		this.highPriority = false;
@@ -79,49 +69,15 @@ export class SelectStatement extends QueryStatement {
 		
 	}
 	
-	protected static sanitizeColumnReference(
-		columnReference: ColumnReference): ColumnIdentifier {
-		
-		if (typeof columnReference === "string") {
-			
-			return {
-				column: columnReference,
-			};
-			
-		} else if (Array.isArray(columnReference)) {
-			
-			if (columnReference.length === 1) {
-				
-				return {
-					column: columnReference[0],
-				};
-				
-			} else if (columnReference.length === 2) {
-				
-				return {
-					table: columnReference[0],
-					column: columnReference[1],
-				};
-				
-			} else {
-				
-				return {
-					database: columnReference[0],
-					table: columnReference[1],
-					column: columnReference[2],
-				};
-				
-			}
-			
-		} else return columnReference;
-		
-	}
-	
-	public from(tableID: string): SelectStatement {
+	public from(table: TableReference | undefined): SelectStatement {
 		
 		const result: SelectStatement = structuredClone(this);
 		
-		result.fromTableID = tableID;
+		if (table !== undefined) {
+			
+			result.fromTable = sanitizeTableReference(table);
+			
+		}
 		
 		return result;
 		
@@ -173,19 +129,19 @@ export class SelectStatement extends QueryStatement {
 		
 	}
 	
+	public select(...columns: ColumnReference[]): SelectStatement {
+		
+		return this.addColumn(...columns);
+		
+	}
+	
 	public addColumn(...columns: ColumnReference[]): SelectStatement {
 		
-		const newStatement: SelectStatement = structuredClone(this);
+		const result: SelectStatement = structuredClone(this);
 		
-		for (let column of columns) {
-			
-			newStatement.columns.push(
-				SelectStatement.sanitizeColumnReference(column)
-			);
-			
-		}
+		result.columns.push(...columns.map(sanitizeColumnReference));
 		
-		return newStatement;
+		return result;
 		
 	}
 	
@@ -204,14 +160,27 @@ export class SelectStatement extends QueryStatement {
 		
 		if (this.columns.length > 0) {
 			
-			// TODO [9/26/2022 @ 4:58 PM] This is not correct...
-			queryComponents.push(...this.columns.toString())
+			const columnSelectionClause: string = this.columns.map(
+				(columnIdentifier: ColumnIdentifier): string => [
+					columnIdentifier.database,
+					columnIdentifier.table,
+					columnIdentifier.column
+				].filter(
+					(x?: string): x is string => x !== undefined
+				).map(
+					(x: string): string => escapingAgent.escapeId(x, true)
+				).join(".")
+			).join(", ");
+			
+			queryComponents.push(columnSelectionClause);
 			
 		} else queryComponents.push("*");
 		
-		if (this.fromTableID !== undefined) {
+		if (this.fromTable !== undefined) {
 			
-			queryComponents.push(`FROM ${this.fromTableID}`);
+			const escapedFromTable: string = escapingAgent.escapeId(this.fromTable);
+			
+			queryComponents.push(`FROM ${this.fromTable}`);
 			
 		}
 		
@@ -235,7 +204,9 @@ export class SelectStatement extends QueryStatement {
 	
 }
 
-export const SELECT:
-	(columns: ColumnIdentifier[], fromTableID?: string) => SelectStatement =
-	(columns: ColumnIdentifier[] = [], fromTableID?: string): SelectStatement =>
-		new SelectStatement(columns, fromTableID);
+export function SELECT(columns: ColumnReference[],
+					   fromTableID?: string): SelectStatement {
+	
+	return new SelectStatement(columns, fromTableID);
+	
+}

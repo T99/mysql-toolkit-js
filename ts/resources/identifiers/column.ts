@@ -1,10 +1,10 @@
 /*
  * Created by Trevor Sears <trevor@trevorsears.com> (https://trevorsears.com/).
- * 3:56 PM -- July 29th, 2022
+ * 6:13 PM -- September 26th, 2022
  * Project: mysql-toolkit-js
  */
 
-export type ColumnDescriptor =
+export type ColumnReference =
 	| string
 	| [string]
 	| [string, string]
@@ -12,56 +12,52 @@ export type ColumnDescriptor =
 	| ColumnIdentifier;
 
 export type ColumnIdentifier = {
-	
-	databaseName?: string,
-	
-	tableName?: string,
-	
-	columnName: string,
-	
+	column: string,
+	table?: string,
+	database?: string,
 };
 
-export function standardizeColumnDescriptor(
-	columnName: string): ColumnIdentifier;
-
-export function standardizeColumnDescriptor(tableName: string,
-	columnName: string): ColumnIdentifier;
-
-export function standardizeColumnDescriptor(databaseName: string,
-	tableName: string, columnName: string): ColumnIdentifier;
-
-export function standardizeColumnDescriptor(
-	descriptor: ColumnDescriptor): ColumnIdentifier;
-
-export function standardizeColumnDescriptor(arg1: string | ColumnDescriptor,
-	arg2?: string, arg3?: string): ColumnIdentifier {
+/**
+ * Sanitizes the input value to a ColumnIdentifier object and returns the
+ * result.
+ * @param {ColumnReference} columnReference The original ColumnReference value,
+ * which could be in a number of different formats.
+ * @returns {ColumnIdentifier} The sanitized ColumnIdentifier object.
+ */
+export function sanitizeColumnReference(
+	columnReference: ColumnReference): ColumnIdentifier {
 	
-	if (arg3 !== undefined) {
+	if (typeof columnReference === "string") {
 		
 		return {
-			databaseName: arg1 as string,
-			tableName: arg2,
-			columnName: arg3,
+			column: columnReference,
 		};
 		
-	} else if (arg2 !== undefined) {
+	} else if (Array.isArray(columnReference)) {
 		
-		return {
-			tableName: arg1 as string,
-			columnName: arg2,
-		};
+		if (columnReference.length === 1) {
+			
+			return {
+				column: columnReference[0],
+			};
+			
+		} else if (columnReference.length === 2) {
+			
+			return {
+				table: columnReference[0],
+				column: columnReference[1],
+			};
+			
+		} else {
+			
+			return {
+				database: columnReference[0],
+				table: columnReference[1],
+				column: columnReference[2],
+			};
+			
+		}
 		
-	} else if (typeof arg1 === "string") return { columnName: arg1 as string };
-	else if (Array.isArray(arg1)) {
-		
-		const paddedDescriptor = arg1.slice(0, 3).reverse();
-		
-		return {
-			columnName: paddedDescriptor[0],
-			tableName: paddedDescriptor[1],
-			databaseName: paddedDescriptor[2],
-		};
-		
-	} else return arg1 as ColumnIdentifier;
+	} else return columnReference;
 	
 }
