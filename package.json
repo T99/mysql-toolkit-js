@@ -54,6 +54,7 @@
 		"gulp-uglify-es": "latest",
 		"jest": "latest",
 		"ts-jest": "latest",
-		"typescript": "latest"
+		"typescript": "latest",
+		"ts-node": "latest"
 	}
 }
