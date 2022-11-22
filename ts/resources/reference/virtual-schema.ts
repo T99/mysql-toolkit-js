@@ -20,7 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import os from "os";
+import * as os from "os";
 import { MySQLVirtualResource } from "./mysql-virtual-resource";
 import { EscapeFunctions } from "mysql";
 import { VirtualTable } from "./virtual-table";

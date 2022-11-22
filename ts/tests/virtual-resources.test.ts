@@ -20,7 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import os from "os";
+import * as os from "os";
 import * as mysql from "mysql";
 import { VirtualSchema } from "../resources/reference/virtual-schema";
 import { VirtualTable } from "../resources/reference/virtual-table";

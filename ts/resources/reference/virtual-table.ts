@@ -20,8 +20,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import os from "os";
-import mysql from "mysql";
+import * as os from "os";
+import * as mysql from "mysql";
 import { MySQLVirtualResourceWithComment } from "./mysql-virtual-resource-with-comment";
 import { VirtualColumn } from "./virtual-column";
 import { VirtualSchema } from "./virtual-schema";

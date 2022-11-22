@@ -20,7 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import os from "os";
+import * as os from "os";
 
 /**
  * Adds the specified indentation string as indentation to the lines of the provided content string, joining the lines
