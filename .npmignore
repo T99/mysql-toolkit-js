@@ -1,25 +1,24 @@
 # Ignore Jetbrains IDE meta-files.
-.idea
+.idea/
 
 # Ignore test files.
-.d.ts/tests
-js/tests
-ts/tests
+.d.ts/tests/
+js/tests/
+ts/tests/
 
 # Ignore TypeScript files.
-ts
+ts/
 
 # Ignore Git/GitHub files.
-.github
+.github/
 .gitattributes
 .gitignore
 
 # Ignore documentation files.
-docs
+docs/
 mkdocs.yml
 
 # Ignore misc. files.
-.eslintrc.js
 .npmignore
 gulpfile.js
 jest.config.ts
