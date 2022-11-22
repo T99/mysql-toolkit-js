@@ -47,6 +47,7 @@
 	"devDependencies": {
 		"@t99/eslint-config": "latest",
 		"@types/jest": "latest",
+		"@types/node": "latest",
 		"del": "latest",
 		"gulp": "latest",
 		"gulp-sourcemaps": "latest",
