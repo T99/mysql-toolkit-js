@@ -74,7 +74,7 @@ describe("DDL construction.", (): void => {
 	test("Simple column.", (): void => {
 		
 		expect(column_id.buildDDL(escapingAgent))
-		.toStrictEqual("`id` INT NOT NULL COMMENT 'A uniquely identifying integer.'");
+			.toStrictEqual("`id` INT NOT NULL COMMENT 'A uniquely identifying integer.'");
 		
 	});
 	
