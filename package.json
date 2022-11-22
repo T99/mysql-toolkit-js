@@ -52,7 +52,7 @@
 		"gulp": "latest",
 		"gulp-sourcemaps": "latest",
 		"gulp-typescript": "latest",
-		"gulp-uglify-es": "latest",
+		"gulp-terser": "latest",
 		"jest": "latest",
 		"ts-jest": "latest",
 		"typescript": "latest",

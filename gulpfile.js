@@ -1,10 +1,11 @@
 /*
  * Created by Trevor Sears <trevor@trevorsears.com> (https://trevorsears.com/).
  * 8:48 PM -- June 16th, 2019.
- * Project: @t99/mysql-toolkit
+ * Project: mysql-toolkit
  * 
- * @t99/mysql-toolkit - My personal toolkit of functions and functionality for working with MySQL servers in TypeScript.
- * Copyright (C) 2021 Trevor Sears
+ * @t99/mysql-toolkit - My personal toolkit of functions and functionality for
+ * working with MySQL servers in TypeScript.
+ * Copyright (C) 2022 Trevor Sears
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +21,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const gulp = require("gulp");
-const typescript = require("gulp-typescript");
-const sourcemaps = require("gulp-sourcemaps");
-const uglify = require("gulp-uglify-es").default;
-const del = require("del");
+import fs from "fs/promises";
+import path from "path";
+import gulp from "gulp";
+import typescript from "gulp-typescript";
+import sourcemaps from "gulp-sourcemaps";
+import terser from "gulp-terser";
+import { deleteAsync } from "del";
 
 const paths = {
 	
@@ -68,18 +71,20 @@ gulp.task("build", build);
 // Cleans and builds the entire project.
 gulp.task("rebuild", rebuild);
 
+gulp.task("transferStyles", transferStyles);
+
 // Watch for changes to relevant files and compile-on-change.
 gulp.task("watch", watch);
 
 function defaultTask(done) {
-
+	
 	return rebuild(done);
 	
 }
 
 function clean(done) {
 	
-	return del([
+	return deleteAsync([
 		paths.javascript.dir,
 		paths.typedefs.dir
 	]);
@@ -88,7 +93,10 @@ function clean(done) {
 
 function build(done) {
 	
-	return buildJavaScriptPipeline(done);
+	return gulp.series(
+		buildJavaScriptPipeline,
+		transferStyles
+	)(done);
 	
 }
 
@@ -134,13 +142,52 @@ function compileTypeScript(done) {
 }
 
 function uglifyJavaScript(done) {
-
+	
 	return gulp.src(paths.javascript.allFiles)
 		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(uglify())
+		.pipe(terser())
 		.pipe(sourcemaps.write("."))
 		.pipe(gulp.dest(paths.javascript.dir));
+	
+}
 
+function transferStyles(done) {
+	
+	const scanDir = async (dir) => {
+		
+		for (const file of await fs.readdir(dir)) {
+			
+			const filePath = path.join(dir, file);
+			
+			let pathComponents = filePath.split(".");
+			
+			if (pathComponents[pathComponents.length - 1] === "scss") {
+				
+				let mappedDirectory = dir.split("/");
+				mappedDirectory[0] = "js";
+				
+				await fs.mkdir(
+					path.join(...mappedDirectory),
+					{ recursive: true }
+				);
+				
+				await fs.copyFile(
+					filePath,
+					path.join(...mappedDirectory, file)
+				);
+				
+			}
+			
+			let stats = await fs.stat(filePath);
+			
+			if (stats.isDirectory()) await scanDir(filePath);
+			
+		}
+		
+	};
+	
+	scanDir(paths.typescript.dir).then(done);
+	
 }
 
 function watch(done) {
