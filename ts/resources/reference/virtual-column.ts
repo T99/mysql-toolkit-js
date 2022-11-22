@@ -23,7 +23,7 @@
 import mysql from "mysql";
 import { MySQLVirtualResourceWithComment } from "./mysql-virtual-resource-with-comment";
 import { ColumnSchema } from "../schemas/column-schema";
-import { VirtualTable, Ordinality } from "./virtual-table";
+import { VirtualTable, ColumnOrdinality } from "./virtual-table";
 
 export class VirtualColumn extends MySQLVirtualResourceWithComment {
 	
@@ -71,7 +71,7 @@ export class VirtualColumn extends MySQLVirtualResourceWithComment {
 		
 	}
 	
-	public setParentTable(table: VirtualTable, ordinality?: Ordinality): void {
+	public setParentTable(table: VirtualTable, ordinality?: ColumnOrdinality): void {
 		
 		// If the requested parent is already the current parent, do nothing.
 		if (table === this.parent) return;

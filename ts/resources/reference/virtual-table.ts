@@ -32,7 +32,7 @@ import { indentLines } from "../../util/indent-lines";
  * 
  * Note: ordinality is zero-indexed.
  */
-export type Ordinality =
+export type ColumnOrdinality =
 	| number
 	| { before: string | VirtualColumn }
 	| { after:  string | VirtualColumn };
@@ -128,7 +128,7 @@ export class VirtualTable extends MySQLVirtualResourceWithComment {
 		
 	}
 	
-	public addColumn(column: VirtualColumn, ordinality?: Ordinality): void {
+	public addColumn(column: VirtualColumn, ordinality?: ColumnOrdinality): void {
 		
 		let shouldSetParentSchema: boolean = true;
 		let shouldAddChildColumn: boolean = true;
@@ -201,7 +201,7 @@ export class VirtualTable extends MySQLVirtualResourceWithComment {
 		
 	}
 	
-	protected normalizeOrdinality(ordinality: Ordinality | undefined, column?: string): number {
+	protected normalizeOrdinality(ordinality: ColumnOrdinality | undefined, column?: string): number {
 		
 		let isExistingColumn: boolean = column === undefined ? false : this.hasColumn(column);
 		
@@ -267,7 +267,7 @@ export class VirtualTable extends MySQLVirtualResourceWithComment {
 	 * @param {string | VirtualColumn} column The name of, or instance of the column to reorder.
 	 * @returns {number} The ordinality/column index of the specified column.
 	 * @throws {Error} If the specified column is not a member of this table.
-	 * @see Ordinality
+	 * @see ColumnOrdinality
 	 */
 	public getColumnIndex(column: string | VirtualColumn): number {
 		
@@ -289,14 +289,14 @@ export class VirtualTable extends MySQLVirtualResourceWithComment {
 	 * the reordering operation.
 	 * 
 	 * @param {string | VirtualColumn} column The name of, or instance of the column to reorder.
-	 * @param {Ordinality} ordinality The desired resulting ordinality of the specified column. 
+	 * @param {ColumnOrdinality} ordinality The desired resulting ordinality of the specified column. 
 	 * @returns {number} The resultant ordinality/column index of the reordered column after the reordering operation.
 	 * @throws {Error} If the specified column (or reference column as a part of the ordinality) is not a member of this
 	 * table.
-	 * @see Ordinality
+	 * @see ColumnOrdinality
 	 * @see VirtualTable#getColumnIndex
 	 */
-	public reorderColumn(column: string | VirtualColumn, ordinality?: Ordinality): number {
+	public reorderColumn(column: string | VirtualColumn, ordinality?: ColumnOrdinality): number {
 		
 		if (!this.hasColumn(column)) {
 			
