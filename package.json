@@ -5,6 +5,18 @@
 	"publishConfig": {
 		"access": "public"
 	},
+	"type": "module",
+	"exports": {
+		".": "./js/main.js"
+	},
+	"typesVersions": {
+		"*": {
+			">=4.0": ["./.d.ts/main.d.ts"]
+		}
+	},
+	"engines": {
+		"node": ">=14.16"
+	},
 	"main": "js/main",
 	"types": ".d.ts/main",
 	"scripts": {
