@@ -22,4 +22,4 @@ mkdocs.yml
 .eslintrc.js
 .npmignore
 gulpfile.js
-jest.config.js
+jest.config.ts
