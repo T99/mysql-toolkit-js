@@ -21,7 +21,7 @@
  */
 
 import os from "os";
-import mysql from "mysql";
+import * as mysql from "mysql";
 import { VirtualSchema } from "../resources/reference/virtual-schema";
 import { VirtualTable } from "../resources/reference/virtual-table";
 import { VirtualColumn } from "../resources/reference/virtual-column";
