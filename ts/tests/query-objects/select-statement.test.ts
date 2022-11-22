@@ -14,6 +14,11 @@ let database: DatabaseConnectionPool;
 beforeAll((): void => {
 	
 	database = new DatabaseConnectionPool({
+		host: "",
+		user: "",
+		password: "",
+		database: "",
+		connectionLimit: 10,
 	});
 	
 });
