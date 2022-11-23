@@ -16,6 +16,7 @@ import {
 	TableReference,
 	sanitizeTableReference
 } from "../resources/identifiers/table";
+import { ConstructorFunction } from "../util/constructor-function.js";
 
 export type SelectUniquenessModifier =
 	| "ALL"
@@ -204,9 +205,6 @@ export class SelectStatement extends QueryStatement {
 	
 }
 
-export function SELECT(columns: ColumnReference[],
-					   fromTableID?: string): SelectStatement {
-	
-	return new SelectStatement(columns, fromTableID);
-	
-}
+export const select: ConstructorFunction<typeof SelectStatement> =
+	(columns?: ColumnReference[], fromTableID?: string): SelectStatement =>
+		new SelectStatement(columns, fromTableID);

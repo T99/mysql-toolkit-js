@@ -4,7 +4,7 @@
  * Project: mysql-toolkit-js
  */
 
-import { SELECT, SelectStatement } from "../../query/select-statement";
+import { select, SelectStatement } from "../../query/select-statement";
 import {
 	DatabaseConnectionPool
 } from "../../connection/database-connection-pool";
@@ -25,7 +25,7 @@ beforeAll((): void => {
 
 test("Basic initialization", (): void => {
 	
-	const statement: SelectStatement = SELECT(["id", "name"], "myTable");
+	const statement: SelectStatement = select(["id", "name"], "myTable");
 	
 	expect(statement.build(database))
 		.toBe("SELECT `id`, `name` FROM `myTable`");
